@@ -22,6 +22,8 @@ function init() {
 
     // 速度
     xspeed = 1
+    yspeed = 1.3
+    zspeed = 0.5
 
     // 全体の速さ
     allSpeed = 0.75
@@ -29,6 +31,8 @@ function init() {
     // 大きさのばらつき
     scaleMin = 0.2
     scaleMax = 1
+
+    opacity = 1.0
 
     // 動かすオブジェクト管理
     // el         : 対象のjqueryエレメント
@@ -41,7 +45,9 @@ function init() {
       y:random(-sh * yrange, sh * yrange),
       z:random(-sh * zrange, sh * zrange),
       speedX:random(1, 4) * xspeed * allSpeed,
-      scale:random(scaleMin, scaleMax)
+      speedY:random(1, 4) * yspeed * allSpeed,
+      scale:random(scaleMin, scaleMax),
+			opacity: opacity
     })
   });
 
@@ -56,6 +62,18 @@ function update() {
   for(var i = 0; i < num; i++) {
     o = tgList[i];
     rotateX(o, radian(o.speedX));
+    rotateY(o, radian(o.speedY));
+    
+    if(o.z <= -100){
+			TweenMax.to(o.el, 0.3, {
+				opacity: 0.1
+
+			});
+    }else if(o.z >= 100){
+			TweenMax.to(o.el, 0.3, {
+				opacity: 1.0
+			});
+    }
 
     TweenMax.set(o.el, {
       scale:o.scale,
