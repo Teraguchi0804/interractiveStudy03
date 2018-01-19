@@ -142,6 +142,19 @@ function rotateZ(obj, angle) {
 }
 
 // ----------------------------------------
+// 画面中央を原点としたxyzを元にスケールを算出し、擬似的な3D座標を計算
+// ※zを使えない場合に使う
+// ----------------------------------------
+function perspective(obj, fl) {
+
+	obj.scale = fl / (fl + obj.z);
+
+	obj.distX = (window.innerWidth * 0.5) + obj.x * obj.scale;
+	obj.distY = (window.innerHeight * 0.5) + obj.y * obj.scale;
+
+}
+
+// ----------------------------------------
 // 度からラジアンに変換
 // @val : 度
 // ----------------------------------------
